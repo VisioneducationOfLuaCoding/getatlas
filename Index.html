@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atlas Executor</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" type="image/png" href="AtlasIcon.png">
+  <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-lua.min.js"></script>
+  <style>
+    pre[class*="language-"],
+    code[class*="language-"] {
+      background: #0d0f14 !important;
+    }
+    body {
+      animation: animateBackground 10s infinite ease-in-out;
+      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cdefs%3E%3Cfilter id='glow'%3E%3CfeGaussianBlur stdDeviation='3' result='blur' /%3E%3CfeMerge%3E%3CfeMergeNode in='blur' /%3E%3CfeMergeNode in='SourceGraphic' /%3E%3C/feMerge%3E%3C/filter%3E%3C/defs%3E%3Ccircle cx='12' cy='12' r='6' fill='%2300bfff' filter='url(%23glow)' /%3E%3C/svg%3E") 12 12, auto;
+    }
+    * {
+      cursor: inherit;
+    }
+    .btn-animated {
+      position: relative;
+      overflow: hidden;
+      border-radius: 9999px;
+      transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.3s ease;
+      box-shadow: 0 0 6px rgba(59, 130, 246, 0.2);
+    }
+    .btn-animated:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
+      background: #3b82f6;
+    }
+    .btn-animated::after {
+      display: none;
+    }
+    .code-3d {
+      perspective: 1200px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+    .code-3d-inner {
+      transform: rotateX(8deg) rotateY(-6deg);
+      transform-style: preserve-3d;
+      background: #1c1f26;
+      border-radius: 0.75rem;
+      border: 1px solid #2d2f35;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(59, 130, 246, 0.05);
+      transition: all 0.4s ease-in-out;
+    }
+    .code-3d-inner:hover {
+      transform: rotateX(0deg) rotateY(0deg) scale(1.01);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 25px rgba(59, 130, 246, 0.1);
+    }
+    #loadingScreen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #0d0f14;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    .loader {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 8px solid #3498db;
+      border-top: 8px solid transparent;
+      animation: moveCircle 3s ease-out forwards;
+    }
+    @keyframes moveCircle {
+      0% { transform: rotate(0deg); opacity: 1; }
+      100% { transform: rotate(360deg); opacity: 0; }
+    }
+    @keyframes animateBackground {
+      0% { background-color: #0d0f14; }
+      50% { background-color: #11131a; }
+      100% { background-color: #0d0f14; }
+    }
+    .glow-text {
+      opacity: 0;
+      animation: fadeGlow 2s ease forwards, glowAnimation 1.5s ease-in-out infinite alternate;
+      background: linear-gradient(90deg, #3b82f6, #60a5fa);
+      -webkit-background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 8px rgba(59, 130, 246, 0.6), 0 0 16px rgba(59, 130, 246, 0.3);
+    }
+    @keyframes fadeGlow {
+      0% { opacity: 0; transform: translateY(-10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes glowAnimation {
+      from { text-shadow: 0 0 8px rgba(59, 130, 246, 0.6), 0 0 16px rgba(59, 130, 246, 0.3); }
+      to { text-shadow: 0 0 12px rgba(59, 130, 246, 0.8), 0 0 20px rgba(59, 130, 246, 0.4); }
+    }
+    .hero-content {
+      animation: fadeInUp 1.5s ease-out;
+    }
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .feature-card {
+      background-color: #1a1c24;
+      border: 1px solid #3b82f6;
+      opacity: 0;
+      animation: fadeIn 1s forwards;
+      padding: 20px;
+      border-radius: 1rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .feature-card:hover {
+      box-shadow: 0 0 20px #3b82f6;
+      transform: scale(1.03);
+      background-color: #222;
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .feature-list {
+      animation: fadeInUp 2s ease-out forwards;
+      opacity: 0;
+    }
+    footer {
+      animation: fadeInFooter 2s ease forwards;
+    }
+    @keyframes fadeInFooter {
+      0% { opacity: 0; transform: translateY(10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .transition-height {
+      transition: max-height 0.5s ease, opacity 0.4s ease;
+      overflow: hidden;
+    }
+    .collapsed {
+      max-height: 0;
+      opacity: 0;
+    }
+    .expanded {
+      max-height: 1000px;
+      opacity: 1;
+    }
+    header:hover .glow-text {
+      text-shadow: 0 0 15px rgba(59, 130, 246, 0.6), 0 0 25px rgba(59, 130, 246, 0.4);
+    }
+    header {
+      position: relative;
+      z-index: 10;
+    }
+    a {
+      pointer-events: auto;
+    }
+  </style>
+</head>
+<body class="bg-[#0d0f14] text-white font-sans">
+  <div id="loadingScreen">
+    <div class="loader"></div>
+  </div>
+
+  <header class="flex justify-between items-center px-8 py-5 border-b border-gray-800 bg-[#0d0f14] w-full relative">
+    <div class="text-2xl font-bold tracking-widest glow-text">ATLAS</div>
+    <div class="space-x-3">
+      <div class="space-x-3">
+        <a href="https://discord.gg/TMRWGXZmAK" class="px-4 py-2 bg-gray-600 text-white rounded-xl hover:bg-gray-700 transition">Community</a>
+        <button onclick="alert('Coming soon! Join the Community for updates.')" class="px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition">
+          Get Atlas
+        </button>
+        <a href="scripts.html" class="px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition">Get Scripts</a>
+      </div>
+      
+  </header>
+
+  <section class="max-w-7xl mx-auto px-6 py-20 grid grid-cols-1 md:grid-cols-2 gap-10 items-center hero-content">
+    <div class="space-y-6">
+      <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">Atlas Executor</h1>
+      <p class="text-gray-400 text-lg">Atlas is a powerful, sleek, and fully featured Roblox executor. Custom UI. Fast injection. Zero bloat.</p>
+      <div class="space-x-4">
+        <button 
+        onclick="alert('Coming Soon! Join the Community for updates')" 
+        class="bg-blue-600 text-white rounded-full px-6 py-3 font-semibold hover:bg-blue-700 transition btn-animated hover:scale-105"
+      >
+        Get Atlas
+      </button>
+      <a href="https://discord.gg/TMRWGXZmAK"
+      class="px-6 py-3 border border-gray-900 text-gray-200 no-underline bg-transparent transition duration-300 ease-in-out hover:bg-gray-800 hover:shadow-[0_0_10px_2px_rgba(209,213,219,0.8)] rounded-lg">
+      Community
+   </a>
+   
+   
+   
+      </div>
+    </div>
+    <div class="code-3d">
+      <div class="code-3d-inner w-full max-w-4xl mx-auto">
+        <div class="flex items-center px-4 py-2 bg-[#0d0f14] border-b border-black-700">
+          <span class="w-3 h-3 mr-2 rounded-full bg-red-500"></span>
+          <span class="w-3 h-3 mr-2 rounded-full bg-yellow-400"></span>
+          <span class="w-3 h-3 mr-4 rounded-full bg-green-500"></span>
+          <span class="text-gray-300 text-xs">script.lua</span>
+        </div>
+        <pre class="language-lua p-6 rounded-b-xl" style="background: #0d0f14;"><code class="language-lua">local Atlas = require("Atlas")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+Atlas.Init({
+  speed = 100,
+  jumpPower = 50,
+  antiKick = true
+})
+
+Atlas.OnPlayerAdded(function(player)
+  print("Player joined: " .. player.Name)
+end)</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-[#101217] py-12 px-6">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl font-bold mb-8 text-white">Why Choose Atlas?</h2>
+      <div class="feature-list grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-6">
+        <div class="feature-card">
+          <h3 class="text-lg font-bold mb-1">🧬 DLL Injection Engine</h3>
+          <p class="text-gray-400 text-sm">High-level DLL injector built for precision and speed. Enjoy lightning-fast script execution.</p>
+        </div>
+        <div class="feature-card">
+          <h3 class="text-lg font-bold mb-1">📜 Script Hub</h3>
+          <p class="text-gray-400 text-sm">Search for your favourite roblox lua scripts in 2 clicks!</p>
+        </div>
+        <div class="feature-card">
+          <h3 class="text-lg font-bold mb-1">🚀 Zero Delay Execution</h3>
+          <p class="text-gray-400 text-sm">Experience the fastest response with no loading screens or lag. Your scripts execute instantly.</p>
+        </div>
+        <div class="feature-card">
+          <h3 class="text-lg font-bold mb-1">💾 Save & Load Scripts</h3>
+          <p class="text-gray-400 text-sm">Never lose your favorite scripts. Save them locally and launch with a single click.</p>
+        </div>
+        <div class="feature-card">
+          <h3 class="text-lg font-bold mb-1">🧰 UI Module Support</h3>
+          <p class="text-gray-400 text-sm">Customizable UI tools that you can build or import with ease, perfect for all your scripting needs.</p>
+        </div>
+        <div class="feature-card">
+          <h3 class="text-lg font-bold mb-1">📡 Cloud-Synced Configs</h3>
+          <p class="text-gray-400 text-sm">Keep all your settings and configurations synced in the cloud, accessible from any device.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="text-center py-10 border-t border-gray-800 text-gray-500">
+    <p>© 2025 Atlas Executor.</p>
+    <p>Credits: Sethiddenproperty, Arayz, DTB, Critcl</p>
+  </footer>
+
+  <script>
+    setTimeout(function() {
+      document.getElementById('loadingScreen').style.display = 'none';
+    }, 3000);
+  </script>
+</body>
+</html>

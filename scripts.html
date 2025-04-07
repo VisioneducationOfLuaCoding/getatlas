@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atlas Scripts</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" type="image/png" href="AtlasIcon.png">
+  <style>
+       body {
+      animation: animateBackground 10s infinite ease-in-out;
+      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cdefs%3E%3Cfilter id='glow'%3E%3CfeGaussianBlur stdDeviation='3' result='blur' /%3E%3CfeMerge%3E%3CfeMergeNode in='blur' /%3E%3CfeMergeNode in='SourceGraphic' /%3E%3C/feMerge%3E%3C/filter%3E%3C/defs%3E%3Ccircle cx='12' cy='12' r='6' fill='%2300bfff' filter='url(%23glow)' /%3E%3C/svg%3E") 12 12, auto;
+    }
+
+    * {
+      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cdefs%3E%3Cfilter id='glow'%3E%3CfeGaussianBlur stdDeviation='3' result='blur' /%3E%3CfeMerge%3E%3CfeMergeNode in='blur' /%3E%3CfeMergeNode in='SourceGraphic' /%3E%3C/feMerge%3E%3C/filter%3E%3C/defs%3E%3Ccircle cx='12' cy='12' r='6' fill='%2300bfff' filter='url(%23glow)' /%3E%3C/svg%3E") 12 12, auto;
+    }
+
+    .glow-text {
+      opacity: 0;
+      animation: fadeGlow 2s ease forwards, glowAnimation 1.5s ease-in-out infinite alternate;
+      background: linear-gradient(90deg, #3b82f6, #60a5fa);
+      -webkit-background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 15px rgba(59, 130, 246, 1), 0 0 30px rgba(59, 130, 246, 0.8);
+    }
+
+    @keyframes fadeGlow {
+      0% {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes glowAnimation {
+      from {
+        text-shadow: 0 0 15px rgba(59, 130, 246, 1), 0 0 30px rgba(59, 130, 246, 0.8);
+      }
+      to {
+        text-shadow: 0 0 25px rgba(59, 130, 246, 1), 0 0 40px rgba(59, 130, 246, 0.8);
+      }
+    }
+
+    img {
+      margin-bottom: 10px;
+      border-radius: 15px;
+    }
+
+    .script-container {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .button-container {
+      display: flex;
+      flex-direction: column;
+    }
+
+    button {
+      margin-top: 10px;
+    }
+
+    .green-button {
+      background-color: #22c55e;
+      color: white;
+      transition: background-color 0.3s ease;
+    }
+
+    .green-button:hover {
+      background-color: #16a34a;
+    }
+  </style>
+</head>
+<body class="bg-[#0d0f14] text-white font-sans">
+  <header class="flex justify-between items-center px-8 py-5 border-b border-gray-800 bg-[#0d0f14] w-full relative">
+    <div class="text-2xl font-bold tracking-widest glow-text">ATLAS</div>
+    <div class="space-x-3">
+      <a href="index.html" class="bg-blue-600 px-6 py-3 rounded-full font-semibold hover:bg-blue-700 btn-animated transition hover:scale-105">Back to Home</a>
+    </div>
+  </header>
+
+  <section class="max-w-7xl mx-auto px-6 py-20">
+    <h2 class="text-4xl font-bold text-center mb-8">Atlas Scripts</h2>
+    <ul class="space-y-4">
+      <li class="bg-[#11131a] p-6 rounded-lg shadow-md hover:bg-[#1a1c24] transition">
+        <h3 class="text-xl font-semibold">Bladeball</h3>
+        <p class="text-gray-400 text-sm">AutoParry, ESP, Rainbow Chams, and Speed walk slider.</p>
+        <div class="script-container">
+          <img src="bladeball.png" alt="SCRIPT 1" style="width: 325px; height: 200px;">
+          <div class="button-container">
+            <button onclick="copyToClipboard('loadstring(game:HttpGet(\'https://raw.githubusercontent.com/VisioneducationOfLuaCoding/BladeBall/refs/heads/main/ScriptLoader\',true))()')" class="w-full bg-blue-600 px-4 py-2 rounded-full text-white hover:bg-blue-700 mb-2">Copy Script</button>
+            <a href="https://direct-link.net/1272522/bladeball-v11keyatlashub"><button  class="w-full green-button px-4 py-2 rounded-full text-white hover:bg-green-600">Get Key</button></a>
+          </div>
+        </div>
+      </li>
+      <li class="bg-[#11131a] p-6 rounded-lg shadow-md hover:bg-[#1a1c24] transition">
+        <h3 class="text-xl font-semibold">Rivals</h3>
+        <p class="text-gray-400 text-sm">Silent aim, Aimbot, ESP.</p>
+        <div class="script-container">
+          <img src="Rivals.png" alt="SCRIPT 2" style="width: 325px; height: 200px;">
+          <div class="button-container">
+            <button onclick="copyToClipboard('loadstring(game:HttpGet(\'https://raw.githubusercontent.com/VisioneducationOfLuaCoding/Rivals2.1/refs/heads/main/CmdLoader\',true))()')" class="w-full bg-blue-600 px-4 py-2 rounded-full text-white hover:bg-blue-700 mb-2">Copy Script</button>
+            <a href="https://link-center.net/1272522/step-2-of-3"><button class="w-full green-button px-4 py-2 rounded-full text-white hover:bg-green-600">Get Key</button></a>
+          </div>
+        </div>
+      </li>
+      <li class="bg-[#11131a] p-6 rounded-lg shadow-md hover:bg-[#1a1c24] transition">
+        <h3 class="text-xl font-semibold">Arsenal</h3>
+        <p class="text-gray-400 text-sm">ESP, Aimbot, Teamcheck, AimbotFov slider, silent aim, FFA Mode, Aim assist.</p>
+        <div class="script-container">
+          <img src="Arsenal.png" alt="SCRIPT 3" style="width: 325px; height: 200px;">
+          <div class="button-container">
+            <button onclick="copyToClipboard('loadstring(game:HttpGet(\'https://raw.githubusercontent.com/VisioneducationOfLuaCoding/ArsenalV1.1.0/refs/heads/main/1.1.3\',true))()')" class="w-full bg-blue-600 px-4 py-2 rounded-full text-white hover:bg-blue-700 mb-2">Copy Script</button>
+            <a href="https://link-hub.net/1272522/vision-hub-v11-arsenal"><button class="w-full green-button px-4 py-2 rounded-full text-white hover:bg-green-600">Get Key</button></a>
+          </div>
+        </div>
+      </li>
+      
+      <li class="bg-[#11131a] p-6 rounded-lg shadow-md hover:bg-[#1a1c24] transition">
+        <h3 class="text-xl font-semibold text-blue-500 hover:text-blue-400">Script Loader</h3>
+        <p class="text-gray-400 text-sm">Choose any of Atlas hub scripts in one script</p>
+        <div class="script-container">
+          <img src="Loader.png" alt="SCRIPT 5" style="width: 325px; height: 200px;">
+          <div class="button-container">
+            <button onclick="copyToClipboard('loadstring(game:HttpGet(\'https://raw.githubusercontent.com/VisioneducationOfLuaCoding/LoaderBeta/refs/heads/main/AtlasHub\',true))()')" class="w-full bg-blue-600 px-4 py-2 rounded-full text-white hover:bg-blue-700 mb-2">Copy Script</button>
+<a href=""><button class="w-full green-button px-4 py-2 rounded-full text-white hover:bg-green-600">Get Key</button></a>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+<div class="text-center"> <p class="text-green-400">All Scripts Operational!</p></div>
+ 
+  <footer class="bg-[#11131a] py-4 mt-12">
+    <div class="text-center text-gray-500">
+      <p>© 2025 Atlas Scripts</p>
+      <p>Credits: Sethiddenproperty, Arayz, DTB, Critcl</p>
+    </div>
+  </footer>
+
+  <script>
+    function copyToClipboard(text) {
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textArea);
+      alert('Script copied to clipboard!');
+    }
+  </script>
+</body>
+</html>
